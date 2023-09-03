@@ -10,7 +10,7 @@ public class MyStack<T>
 	{
 		if (obj == null)
 		{
-			throw new ArgumentNullException();
+			throw new ArgumentNullException(nameof(obj));
 		}
 
 		_list.Add(obj);

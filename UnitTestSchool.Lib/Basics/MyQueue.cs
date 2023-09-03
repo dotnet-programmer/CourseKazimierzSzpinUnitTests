@@ -6,7 +6,15 @@ public class MyQueue<T>
 
 	public int Count => _list.Count;
 
-	public void Enqueue(T value) => _list.Add(value);
+	public void Enqueue(T value)
+	{
+		if (value is null)
+		{
+			throw new ArgumentNullException(nameof(value));
+		}
+
+		_list.Add(value);
+	}
 
 	public T Peek()
 	{

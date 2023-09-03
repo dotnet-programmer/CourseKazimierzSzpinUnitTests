@@ -4,6 +4,17 @@ public class TicTacToe
 {
 	private int _winner;
 
+	// 3x3
+	// 0 - puste
+	// 1 - krzyżyk
+	// 2 - kółko
+	// [ [0,0,1]
+	//   [0,1,2]
+	//   [2,1,0] ] 
+	// zwraca -1 - rozgrywka nie jest zakończona
+	// zwraca 0 - remis
+	// zwraca 1 - wygrywa krzyżyk
+	// zwraca 2 - wygrywa kółko
 	public int SolveGame(int[,] board)
 	{
 		if (RowIsWon(board) || ColumnIsWon(board) || DiagonalIsWon(board))
