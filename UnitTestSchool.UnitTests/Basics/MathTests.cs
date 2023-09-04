@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using Math = UnitTestSchool.Lib.Basics.Math;
+﻿using Math = UnitTestSchool.Lib.Basics.Math;
 
 namespace UnitTestSchool.UnitTests.Basics;
 
@@ -8,10 +7,7 @@ internal class MathTests
 	private Math _math;
 
 	[SetUp]
-	public void SetUp()
-	{
-		_math = new();
-	}
+	public void SetUp() => _math = new();
 
 	[Test]
 	public void GetNwd_WhenCalled_ShouldReturnNdw()
@@ -53,7 +49,6 @@ internal class MathTests
 		//result.Should().BeInDescendingOrder();
 		//result.Should().NotBeNull();
 	}
-
 
 	[TestCase(1, "Odd")]
 	[TestCase(2, "Even")]

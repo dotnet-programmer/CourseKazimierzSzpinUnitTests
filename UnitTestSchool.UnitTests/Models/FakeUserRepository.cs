@@ -1,6 +1,4 @@
-﻿using UnitTestSchool.Lib.Mocking;
-
-namespace UnitTestSchool.UnitTests.Models;
+﻿namespace UnitTestSchool.UnitTests.Models;
 
 // przykładowa klasa zastępująca jakiś wycinek realnego kodu
 // po to powstały Mocki, żeby nie tworzyć takich sztucznych klas

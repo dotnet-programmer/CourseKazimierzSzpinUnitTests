@@ -2,6 +2,6 @@
 
 public interface ICustomer
 {
-	public int Id { get; set; }
-	public bool IsNewCustomer { get; set; }
+	int Id { get; set; }
+	bool IsNewCustomer { get; set; }
 }

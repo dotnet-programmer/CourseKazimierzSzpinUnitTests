@@ -1,5 +1,4 @@
-﻿
-namespace UnitTestSchool.Lib.Mocking;
+﻿namespace UnitTestSchool.Lib.Mocking;
 
 public interface IUsersRepository
 {

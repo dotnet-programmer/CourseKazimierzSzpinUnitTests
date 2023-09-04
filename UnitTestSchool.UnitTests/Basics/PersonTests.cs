@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-namespace UnitTestSchool.UnitTests.Basics;
+﻿namespace UnitTestSchool.UnitTests.Basics;
 
 internal class PersonTests
 {

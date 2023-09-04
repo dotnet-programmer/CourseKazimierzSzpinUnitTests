@@ -2,13 +2,9 @@
 
 public class Robot
 {
-	public string Greetings()
-	{
-		if (DateTime.Now.Hour < 18)
-		{
-			return "Dzień dobry!";
-		}
+	private readonly IDateTimeWrapper _dateTimeWrapper;
 
-		return "Dobry wieczór!";
-	}
+	public Robot(IDateTimeWrapper dateTimeWrapper) => _dateTimeWrapper = dateTimeWrapper;
+
+	public string Greetings() => _dateTimeWrapper.Now.Hour < 18 ? "Dzień dobry!" : "Dobry wieczór!";
 }

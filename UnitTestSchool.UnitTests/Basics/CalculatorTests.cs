@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-namespace UnitTestSchool.UnitTests.Basics;
+﻿namespace UnitTestSchool.UnitTests.Basics;
 
 public class CalculatorTests
 {
@@ -89,7 +88,6 @@ public class CalculatorTests
 		int result = _calculator.Add(number1, number2);
 		result.Should().Be(expectedResult);
 	}
-
 
 	[Test]
 	public void Divide_WhenCalled_ShouldReturnDivision()

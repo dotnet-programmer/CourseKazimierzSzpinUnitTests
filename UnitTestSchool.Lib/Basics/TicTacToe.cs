@@ -10,7 +10,7 @@ public class TicTacToe
 	// 2 - kółko
 	// [ [0,0,1]
 	//   [0,1,2]
-	//   [2,1,0] ] 
+	//   [2,1,0] ]
 	// zwraca -1 - rozgrywka nie jest zakończona
 	// zwraca 0 - remis
 	// zwraca 1 - wygrywa krzyżyk

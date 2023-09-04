@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿namespace UnitTestSchool.UnitTests.Basics;
 
-namespace UnitTestSchool.UnitTests.Basics;
 internal class FizzBuzzTests
 {
 	//private FizzBuzz _fizzBuzz;
