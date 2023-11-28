@@ -37,7 +37,7 @@ public class CalculatorTests
 		int result = _calculator.Add(1, 2);
 
 		// Assert - weryfikacja działania metody testowanej - sprawdzanie otrzymanego wyniku z wynikiem oczekiwanym
-		Assert.AreEqual(3, result);
+		Assert.That(result, Is.EqualTo(3));
 	}
 
 	// NuGet - FluentAssertions
