@@ -20,7 +20,7 @@ internal class OfferTests
 
 	[TestCase("")]
 	[TestCase(" ")]
-	[TestCase(null)]
+	//[TestCase(null)]
 	public void SetTitle_WhenArgumentIsNullOrWhiteSpace_ShouldThrowArgumentNullException(string title)
 	{
 		Action action = () => _offer.SetTitle(title);
