@@ -4,7 +4,7 @@ public class Basket
 {
 	public decimal TotalPrice { get; set; }
 
-	public List<Product> Products { get; } = new List<Product>();
+	public List<Product> Products { get; } = [];
 
 	public void AddProduct(Product product)
 	{

@@ -13,15 +13,9 @@ public class Calculator
 		return result;
 	}
 
-	public int Subtraction(int number1, int number2) => number1 - number2;
+	public int Subtraction(int number1, int number2)
+		=> number1 - number2;
 
 	public int Divide(int dividend, int divisor)
-	{
-		if (divisor == 0)
-		{
-			throw new DivideByZeroException();
-		}
-
-		return dividend / divisor;
-	}
+		=> divisor != 0 ? dividend / divisor : throw new DivideByZeroException();
 }

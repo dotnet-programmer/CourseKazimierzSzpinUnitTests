@@ -8,7 +8,8 @@ public class Offer
 
 	public event EventHandler<Guid> OfferChanged;
 
-	public Offer() => _id = Guid.NewGuid();
+	public Offer()
+		=> _id = Guid.NewGuid();
 
 	public void SetTitle(string title)
 	{
@@ -18,9 +19,9 @@ public class Offer
 		}
 
 		Title = title;
-
 		OnOfferChanged();
 	}
 
-	private void OnOfferChanged() => OfferChanged?.Invoke(this, _id);
+	private void OnOfferChanged()
+		=> OfferChanged?.Invoke(this, _id);
 }

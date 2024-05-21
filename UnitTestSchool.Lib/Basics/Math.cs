@@ -21,7 +21,7 @@ public class Math
 
 	public IEnumerable<int> GetEvenNumbers(int range)
 	{
-		var evenNumbers = new List<int>();
+		List<int> evenNumbers = [];
 
 		for (int i = 1; i <= range; i++)
 		{
@@ -35,11 +35,5 @@ public class Math
 	}
 
 	public string GetEvenOrOddMsg(int number)
-	{
-		if (number % 2 == 0)
-		{
-			return "Even";
-		}
-		return "Odd";
-	}
+		=> number % 2 == 0 ? "Even" : "Odd";
 }

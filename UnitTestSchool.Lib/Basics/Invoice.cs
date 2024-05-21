@@ -6,10 +6,11 @@ public class Invoice
 
 	public void AddPosition(InvoicePosition position)
 	{
-		if (position == null)
-		{
-			throw new ArgumentNullException(nameof(position));
-		}
+		//if (position == null)
+		//{
+		//	throw new ArgumentNullException(nameof(position));
+		//}
+		ArgumentNullException.ThrowIfNull(position, nameof(position));
 
 		if (!position.IsAvailable)
 		{

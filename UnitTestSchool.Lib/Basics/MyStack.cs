@@ -2,16 +2,18 @@
 
 public class MyStack<T>
 {
-	private readonly List<T> _list = new();
+	private readonly List<T> _list = [];
 
-	public int Count => _list.Count;
+	public int Count
+		=> _list.Count;
 
 	public void Push(T obj)
 	{
-		if (obj == null)
-		{
-			throw new ArgumentNullException(nameof(obj));
-		}
+		//if (obj == null)
+		//{
+		//	throw new ArgumentNullException(nameof(obj));
+		//}
+		ArgumentNullException.ThrowIfNull(obj, nameof(obj));
 
 		_list.Add(obj);
 	}

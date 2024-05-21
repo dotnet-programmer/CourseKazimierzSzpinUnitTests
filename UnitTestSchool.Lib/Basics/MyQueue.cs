@@ -2,16 +2,18 @@
 
 public class MyQueue<T>
 {
-	private readonly List<T> _list = new();
+	private readonly List<T> _list = [];
 
-	public int Count => _list.Count;
+	public int Count
+		=> _list.Count;
 
 	public void Enqueue(T value)
 	{
-		if (value is null)
-		{
-			throw new ArgumentNullException(nameof(value));
-		}
+		//if (value is null)
+		//{
+		//	throw new ArgumentNullException(nameof(value));
+		//}
+		ArgumentNullException.ThrowIfNull(value, nameof(value));
 
 		_list.Add(value);
 	}
@@ -33,7 +35,7 @@ public class MyQueue<T>
 			throw new InvalidOperationException();
 		}
 
-		var result = _list[0];
+		T result = _list[0];
 		_list.RemoveAt(0);
 
 		return result;

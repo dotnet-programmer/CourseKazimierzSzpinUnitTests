@@ -111,7 +111,8 @@ public class TicTacToe
 		return result;
 	}
 
-	private static bool CheckIfGameIsWon(IReadOnlyCollection<int> row) => row.All(x => x == row.First());
+	private static bool CheckIfGameIsWon(IReadOnlyCollection<int> row) 
+		=> row.All(x => x == row.First());
 
 	private static List<int> GetRow(int[,] board, int i)
 	{
