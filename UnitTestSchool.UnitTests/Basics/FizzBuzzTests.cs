@@ -2,14 +2,6 @@
 
 internal class FizzBuzzTests
 {
-	//private FizzBuzz _fizzBuzz;
-
-	//[SetUp]
-	//public void SetUp()
-	//{
-	//	_fizzBuzz = new();
-	//}
-
 	[Test]
 	public void GetOutput_WhenInputIsDivisibleBy3And5_ShouldReturnFizzBuzz()
 	{

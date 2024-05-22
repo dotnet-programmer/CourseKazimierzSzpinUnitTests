@@ -5,7 +5,8 @@ internal class OfferTests
 	private Offer _offer;
 
 	[SetUp]
-	public void SetUp() => _offer = new();
+	public void SetUp()
+		=> _offer = new();
 
 	// testowanie zdarzeń
 	[Test]

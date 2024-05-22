@@ -2,10 +2,11 @@
 
 internal class MyQueueTests
 {
-	private MyQueue<int?> _queue;
+	private MyQueue<string> _queue;
 
 	[SetUp]
-	public void SetUp() => _queue = new();
+	public void SetUp()
+		=> _queue = new();
 
 	#region Enqueue
 
@@ -19,7 +20,7 @@ internal class MyQueueTests
 	[Test]
 	public void Enqueue_WhenArgumentIsValid_ShouldAddItemToQueue()
 	{
-		_queue.Enqueue(1);
+		_queue.Enqueue("1");
 		_queue.Count.Should().Be(1);
 	}
 
@@ -37,19 +38,19 @@ internal class MyQueueTests
 	[Test]
 	public void Peek_WhenQueueHasItems_ShouldReturnFirstItem()
 	{
-		_queue.Enqueue(1);
-		_queue.Enqueue(2);
-		_queue.Enqueue(3);
+		_queue.Enqueue("1");
+		_queue.Enqueue("2");
+		_queue.Enqueue("3");
 		var item = _queue.Peek();
-		item.Should().Be(1);
+		item.Should().Be("1");
 	}
 
 	[Test]
 	public void Peek_WhenQueueHasItems_ShouldNotRemoveAnyItem()
 	{
-		_queue.Enqueue(1);
-		_queue.Enqueue(2);
-		_queue.Enqueue(3);
+		_queue.Enqueue("1");
+		_queue.Enqueue("2");
+		_queue.Enqueue("3");
 		_ = _queue.Peek();
 		_queue.Count.Should().Be(3);
 	}
@@ -68,19 +69,19 @@ internal class MyQueueTests
 	[Test]
 	public void Dequeue_WhenQueueHasItems_ShouldReturnFirstItem()
 	{
-		_queue.Enqueue(1);
-		_queue.Enqueue(2);
-		_queue.Enqueue(3);
+		_queue.Enqueue("1");
+		_queue.Enqueue("2");
+		_queue.Enqueue("3");
 		var item = _queue.Dequeue();
-		item.Should().Be(1);
+		item.Should().Be("1");
 	}
 
 	[Test]
 	public void Dequeue_WhenQueueHasItems_ShouldRemoveFirstItem()
 	{
-		_queue.Enqueue(1);
-		_queue.Enqueue(2);
-		_queue.Enqueue(3);
+		_queue.Enqueue("1");
+		_queue.Enqueue("2");
+		_queue.Enqueue("3");
 		_ = _queue.Dequeue();
 		_queue.Count.Should().Be(2);
 	}

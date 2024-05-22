@@ -16,4 +16,8 @@ internal class BasketTests
 
 		basket.TotalPrice.Should().Be(1);
 	}
+
+	// dodatkowe testy mogą być np.
+	// - czy produkt jest faktycznie w koszyku
+	// - co się stanie jak produkt będzie null
 }

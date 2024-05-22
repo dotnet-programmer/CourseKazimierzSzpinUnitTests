@@ -7,7 +7,8 @@ internal class MathTests
 	private Math _math;
 
 	[SetUp]
-	public void SetUp() => _math = new();
+	public void SetUp()
+		=> _math = new();
 
 	[Test]
 	public void GetNwd_WhenCalled_ShouldReturnNdw()
@@ -29,15 +30,20 @@ internal class MathTests
 	[Test]
 	public void GetEvenNumbers_WhenCalled_ShouldReturnEvenNumbersInGivenRange()
 	{
+		int[] expectation = [2, 4];
+
 		var result = _math.GetEvenNumbers(4);
 		//result.Should().NotBeEmpty();
 		//result.Should().HaveCount(2);
-		//result.Should().BeEquivalentTo(new[] { 2, 4 });
+		//result.Should().BeEquivalentTo(expectation);
 
 		// warunki asercji można łączyć ze sobą poprzez And
-		result.Should().NotBeEmpty().And.HaveCount(2).And.BeEquivalentTo(new[] { 2, 4 });
+		result.Should().NotBeEmpty()
+			.And.HaveCount(2)
+			.And.BeEquivalentTo(expectation);
 
 		//result.Should().Contain(2);
+		// jeżeli sprawdzenie czy zawiera więcej niż 1 konkretna liczba, to trzeba przekazać obiekt IEnumerable
 		//result.Should().Contain(new[] { 2, 4 });
 		//result.Should().NotBeEquivalentTo(new[] { 1, 3 });
 		//result.Should().OnlyHaveUniqueItems();

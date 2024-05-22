@@ -6,24 +6,29 @@ public class CalculatorTests
 
 	// wykonywane jednorazowo przed zestawem testów
 	[OneTimeSetUp]
-	public void OneTimeSetUp() => _calculator = null;
+	public void OneTimeSetUp()
+		=> _calculator = null;
 
 	// wykonywane przed każdą metodą testową
 	[SetUp]
-	public void SetUp() => _calculator = new();
+	public void SetUp()
+		=> _calculator = new();
 
 	// wykonywane jednorazowo po zestawie testów
 	[OneTimeTearDown]
-	public void OneTimeTearDown() => _calculator = null;
+	public void OneTimeTearDown()
+		=> _calculator = null;
 
 	// wykonywane po każdej metodzie testowej
 	[TearDown]
-	public void TearDown() => _calculator = null;
+	public void TearDown()
+		=> _calculator = null;
 
 	// metoda inicjalizująca - można pisać swoje metody wywoływane w Arrange zamiast metody oznaczonej atrybutem SetUp
 	// różnica to trzeba pamiętać o wywoływaniu ich ręcznie za każdym razem
 	// metody SetUp działają dla wszystkich metod, a metody inicjalizujące można wywołać tylko w wybranych metodach testowych
-	private void Init() => _calculator = new();
+	private void Init()
+		=> _calculator = new();
 
 	// NazwaMetody_Scenariusz_OczekiwanyRezultat
 	[Test]
@@ -46,9 +51,13 @@ public class CalculatorTests
 	{
 		//Calculator calculator = new();
 		int result = _calculator.Add(1, 2);
-		result.Should().Be(3);
 
-		//tylko 1 logiczna asercja na test
+		// to jest 1 asercja logiczna - wiele warunków, ale sprawdzają ten sam wynik
+		result.Should().Be(3);
+		result.Should().BePositive();
+		result.Should().BeGreaterThan(2);
+
+		//tylko 1 logiczna asercja na test, to poniżej sprawdza już coś innego niż wynik działania metody Add
 		//calculator.Sum.Should().Be(3); // powinien być kolejny test z odpowiednią nazwą
 	}
 

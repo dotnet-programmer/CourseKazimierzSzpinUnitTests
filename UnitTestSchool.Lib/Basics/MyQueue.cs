@@ -7,6 +7,7 @@ public class MyQueue<T>
 	public int Count
 		=> _list.Count;
 
+	// dodaj element na koniec kolejki
 	public void Enqueue(T value)
 	{
 		//if (value is null)
@@ -18,6 +19,7 @@ public class MyQueue<T>
 		_list.Add(value);
 	}
 
+	// zwraca pierwszy element z kolejki, ale nie usuwa tego elementu
 	public T Peek()
 	{
 		if (_list.Count == 0)
@@ -28,6 +30,7 @@ public class MyQueue<T>
 		return _list[0];
 	}
 
+	// usuwa pierwszy element i zwraca go 
 	public T Dequeue()
 	{
 		if (_list.Count == 0)
