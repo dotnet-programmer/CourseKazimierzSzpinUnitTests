@@ -2,12 +2,35 @@
 
 public class OrderService
 {
-	public decimal CalculateDiscount(decimal orderAmount, ICustomer customer)
+	// na podstawie przekazanego klienta oraz kwoty zamówienia zwraca wartość zniżki
+	public decimal CalculateDiscount(decimal orderAmount, Customer customer)
 	{
-		if (customer == null)
+		//if (customer == null)
+		//{
+		//	throw new ArgumentNullException(nameof(customer));
+		//}
+		ArgumentNullException.ThrowIfNull(customer, nameof(customer));
+
+		if (customer.IsNewCustomer)
 		{
-			throw new ArgumentNullException(nameof(customer));
+			return 0;
 		}
+
+		if (orderAmount > 100)
+		{
+			return 20;
+		}
+
+		return 0;
+	}
+
+	public decimal CalculateDiscountMoq(decimal orderAmount, ICustomer customer)
+	{
+		//if (customer == null)
+		//{
+		//	throw new ArgumentNullException(nameof(customer));
+		//}
+		ArgumentNullException.ThrowIfNull(customer, nameof(customer));
 
 		if (customer.IsNewCustomer)
 		{

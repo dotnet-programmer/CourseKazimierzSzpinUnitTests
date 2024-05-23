@@ -1,20 +1,15 @@
 ﻿namespace UnitTestSchool.Lib.Mocking;
 
-public class Authentication
+public class Authentication(IUsersRepository usersRepository)
 {
-	private readonly IUsersRepository _usersRepository;
-
-	public Authentication(IUsersRepository usersRepository) => _usersRepository = usersRepository;
+	private readonly IUsersRepository _usersRepository = usersRepository;
 
 	public string Login(string user, string password)
 	{
 		var isAuthenticated = _usersRepository.Login(user, password);
 
-		if (!isAuthenticated)
-		{
-			return "User or password is incorrect.";
-		}
-
-		return string.Empty;
+		return isAuthenticated
+			? string.Empty
+			: "User or password is incorrect.";
 	}
 }
