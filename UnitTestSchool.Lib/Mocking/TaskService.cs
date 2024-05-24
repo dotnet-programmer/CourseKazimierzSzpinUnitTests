@@ -1,10 +1,52 @@
-﻿namespace UnitTestSchool.Lib.Mocking;
+﻿using NLog;
 
+namespace UnitTestSchool.Lib.Mocking;
+
+public class TaskServiceOld
+{
+	// uzależnienie od klasy Logger - zewnętrzna zależność
+	private Logger _logger = LogManager.GetCurrentClassLogger();
+
+	// uzależnienie od klasy ApplicationDbContext - zewnętrzna zależność
+	private ApplicationDbContext _context;
+
+	public TaskServiceOld()
+	{
+		_context = new ApplicationDbContext();
+	}
+
+	public void CloseTask(int taskId)
+	{
+		var task = _context.Tasks.FirstOrDefault(x => x.Id == taskId);
+
+		task.IsClosed = true;
+		_context.SaveChanges();
+
+		try
+		{
+			// użycie konkretnej klasy do wysyłki email spowoduje wysłanie emaila podczas każdego uruchomoienia testów - zewnętrzna zależność
+			new EmailSender().Send(
+				$"Zadanie {task.Title}",
+				$"Zadanie {task.Title} zostało zamknięte.",
+				task.User.Email);
+
+			// uzależnienie od biblioteki System.Windows.Forms - zewnętrzna zależność
+			//MessageBox.Show("Wysyłanie e-mail'a zakończono sukcesem.");
+		}
+		catch (Exception exception)
+		{
+			_logger.Error(exception, $"Wysyłanie e-mail zakończone błędem {exception.Message}.");
+			//MessageBox.Show("Wysyłanie e-mail'a zakończono błędem.");
+		}
+	}
+}
+
+// refaktoring:
 public class TaskService
 {
 	private readonly ILogger _logger;
 
-	// private ApplicationDbContext _context;
+	// wzorzez Repozitory i Unit Of Work
 	private readonly IUnitOfWork _unitOfWork;
 
 	private readonly IEmailSender _emailSender;
@@ -13,7 +55,6 @@ public class TaskService
 	public TaskService(ILogger logger, IUnitOfWork unitOfWork, IEmailSender emailSender, IMessageBoxWrapper messageBoxWrapper)
 	{
 		_logger = logger;
-		// _context = new ApplicationDbContext();
 		_unitOfWork = unitOfWork;
 		_emailSender = emailSender;
 		_messageBoxWrapper = messageBoxWrapper;
@@ -21,7 +62,6 @@ public class TaskService
 
 	public void CloseTask(int taskId)
 	{
-		// var task = _context.Tasks.FirstOrDefault(x => x.Id == taskId);
 		var task = _unitOfWork.Task.GetTask(taskId);
 
 		if (task is null)
@@ -36,7 +76,6 @@ public class TaskService
 
 		task.IsClosed = true;
 
-		// _context.SaveChanges();
 		_unitOfWork.Complete();
 
 		try

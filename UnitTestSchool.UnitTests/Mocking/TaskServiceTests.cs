@@ -47,6 +47,7 @@ internal class TaskServiceTests
 	{
 		_mockEmailSender.Setup(x => x.Send(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws(new Exception());
 		_taskService.CloseTask(_task.Id);
+		// sprawdzenie, czy metoda Error z Loggera została wywołana dokładnie 1 raz
 		_mockLogger.Verify(x => x.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
 	}
 

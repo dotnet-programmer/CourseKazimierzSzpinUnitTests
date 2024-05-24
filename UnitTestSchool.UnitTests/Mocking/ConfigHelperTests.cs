@@ -17,10 +17,15 @@ internal class ConfigHelperTests
 	[Test]
 	public void GetConnectionString_WhenCalled_ShouldReturnConnectionString()
 	{
+		// przygotowanie wartości oczekiwanej
 		Config config = new() { ConnectionString = "1" };
+
+		// przygotowanie Mocka zastępującego FileReader
 		string jsonConfig = JsonSerializer.Serialize(config);
 		_mockFileReader.Setup(x => x.Read(It.IsAny<string>())).Returns(jsonConfig);
+
 		string connectionString = _configHelper.GetConnectionString();
+
 		connectionString.Should().Be(config.ConnectionString);
 	}
 
@@ -28,7 +33,9 @@ internal class ConfigHelperTests
 	public void GetConnectionString_WhenConfigIsNull_ShouldThrowExceptionWithCorrectMessage()
 	{
 		_mockFileReader.Setup(x => x.Read(It.IsAny<string>())).Returns("");
+
 		Action action = () => _configHelper.GetConnectionString();
-		action.Should().ThrowExactly<Exception>().WithMessage("*Incorrect paring config*");
+
+		action.Should().ThrowExactly<Exception>().WithMessage("*Incorrect parsing config*");
 	}
 }

@@ -4,16 +4,34 @@ namespace UnitTestSchool.Lib.Mocking;
 
 public class ConfigHelper
 {
+	// klasa ConfigHelper przed refaktoringiem
+	public string GetConnectionStringOld()
+	{
+		// zewnętrzna zależność - pobieranie danych z pliku, trzeba się pozbyć i tutaj podstawić Mocka żeby napisać test do takiej metody
+		// żeby to zastąpić, trzeba wprowadzić interfejs, żeby w testach zastąpić go Mockiem
+		var configFromFile = File.ReadAllText("config.txt");
+		var config = JsonConvert.DeserializeObject<Config>(configFromFile);
+		return config.ConnectionString;
+	}
+
+
+	// klasa przygotowana do testów:
+
 	private readonly IFileReader _fileReader;
 
-	public ConfigHelper(IFileReader fileReader) => _fileReader = fileReader;
+	// implementacja interfejsu w klasie produkcyjnej za pomocą Dependency Injection
+	public ConfigHelper(IFileReader fileReader)
+		=> _fileReader = fileReader;
 
 	public string GetConnectionString()
 	{
-		var configFromFile = _fileReader.Read("config.txt");
-		//var config = JsonSerializer.Deserialize<Config>(configFromFile);
-		var config = JsonConvert.DeserializeObject<Config>(configFromFile);
+		string configFromFile = _fileReader.Read("config.txt");
 
-		return config is null ? throw new Exception("Incorrect paring config") : config.ConnectionString;
+		//var config = JsonSerializer.Deserialize<Config>(configFromFile);
+		Config config = JsonConvert.DeserializeObject<Config>(configFromFile);
+
+		return config is null
+			? throw new Exception("Incorrect parsing config")
+			: config.ConnectionString;
 	}
 }
