@@ -1,4 +1,6 @@
-﻿namespace UnitTestSchool.UnitTests.Mocking;
+﻿using UnitTestSchool.UnitTests.Models;
+
+namespace UnitTestSchool.UnitTests.Mocking;
 
 internal class AuthenticationTests
 {
@@ -7,25 +9,31 @@ internal class AuthenticationTests
 	[TestCase("1", "2")]
 	public void Login_WhenCorrectData_ShouldReturnEmptyString_Imperative(string user, string password)
 	{
-		// inicjalizacja nowego Mock-a, najczęściej takie inicjalizacje przenosi się do metody SetUp albo własnej metody inicjalizującej
+		// inicjalizacja nowego Mock-a, jako T podaje sie mockowaną zależność,
+		// najczęściej takie inicjalizacje przenosi się do metody SetUp albo własnej metody inicjalizującej
 		Mock<IUsersRepository> mockUserRepository = new();
 
 		// zdefiniowanie, jak ma wyglądać metoda login:
 		// w metodzie Setup trzeba podać lambdę, gdzie określa się mockowaną metodę wraz z konkretnymi parametrami oraz w Returns() wartość zwracaną z tej metody
 		// czyli w tym przypadku, dla parametrów 1 i 2 zostanie zwrócona wartość true
-		//mockUserRepository.Setup(x => x.Login("1", "2")).Returns(true);
+		//mockUserRepository
+		//.Setup(x => x.Login("1", "2"))
+		//.Returns(true);
 
 		// zwraca True dla każdego stringa podstawionego jako argument:
-		//mockUserRepository.Setup(x => x.Login(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+		//mockUserRepository
+		//.Setup(x => x.Login(It.IsAny<string>(), It.IsAny<string>()))
+		//.Returns(true);
 
 		// testy dla konkretnych stringów - w większości przypadków to lepsze rozwiązanie niż ogólne IsAny<string>
-		mockUserRepository.Setup(x => x.Login(user, password)).Returns(true);
+		mockUserRepository
+			.Setup(x => x.Login(user, password))
+			.Returns(true);
 
 		// w miejsce zastępowanej zależności trzeba przekazać Object przygotowanego wcześniej Mocka
 		Authentication authentication = new(mockUserRepository.Object);
 
-		var result = authentication.Login(user, password);
-
+		string result = authentication.Login(user, password);
 		result.Should().BeEmpty();
 	}
 
@@ -33,11 +41,11 @@ internal class AuthenticationTests
 	public void Login_WhenIncorrectData_ShouldReturnCorrectMessage_Imperative(string user, string password)
 	{
 		Mock<IUsersRepository> mockUserRepository = new();
-		mockUserRepository.Setup(x => x.Login(user, password)).Returns(false);
+		mockUserRepository
+			.Setup(x => x.Login(user, password))
+			.Returns(false);
 		Authentication authentication = new(mockUserRepository.Object);
-
-		var result = authentication.Login(user, password);
-
+		string result = authentication.Login(user, password);
 		result.Should().Contain("User or password is incorrect.");
 	}
 
@@ -71,27 +79,25 @@ internal class AuthenticationTests
 
 	// złe rozwiązanie - użycie sztucznej klasy FakeUserRepository zamiast Moq
 
-	//private readonly Authentication _authentication;
+	private Authentication _authentication;
 
-	//[SetUp]
-	//public void SetUp()
-	//{
-	//	_authentication = new(new FakeUserRepository());
-	//}
+	[SetUp]
+	public void SetUp()
+		=> _authentication = new(new FakeUserRepository());
 
-	//[Test]
-	//public void Login_WhenCorrectData_ShouldReturnEmptyString()
-	//{
-	//	var result = _authentication.Login("1", "2");
-	//	result.Should().BeEmpty();
-	//}
+	[Test]
+	public void Login_WhenCorrectData_ShouldReturnEmptyString()
+	{
+		var result = _authentication.Login("1", "2");
+		result.Should().BeEmpty();
+	}
 
-	//[Test]
-	//public void Login_WhenIncorrectData_ShouldReturnCorrectMessage()
-	//{
-	//	var result = _authentication.Login("2", "2");
-	//	result.Should().Contain("User or password is incorrect.");
-	//}
+	[Test]
+	public void Login_WhenIncorrectData_ShouldReturnCorrectMessage()
+	{
+		var result = _authentication.Login("2", "2");
+		result.Should().Contain("User or password is incorrect.");
+	}
 
 	#endregion Fake class
 }

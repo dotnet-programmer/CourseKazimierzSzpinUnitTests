@@ -8,11 +8,14 @@ internal class RobotTests
 	public void Greetings_WhenCalled_ShouldReturnCorrectMessage(DateTime dateTime, string expectedMessage)
 	{
 		// właściwość Now ma zwracać datę przekazaną w parametrze
-		IDateTimeWrapper mockDateTimeWrapper = Mock.Of<IDateTimeWrapper>(x => x.Now == dateTime);
-		Robot robot = new(mockDateTimeWrapper);
+		//IDateTimeWrapper mockDateTimeWrapper = Mock.Of<IDateTimeWrapper>(x => x.Now == dateTime);
+		//Robot robot = new(mockDateTimeWrapper);
+
+		Mock<IDateTimeWrapper> mockDateTimeWrapper = new();
+		mockDateTimeWrapper.Setup(x => x.Now).Returns(dateTime);
+		Robot robot = new(mockDateTimeWrapper.Object);
 
 		string result = robot.Greetings();
-
 		result.Should().Be(expectedMessage);
 	}
 }

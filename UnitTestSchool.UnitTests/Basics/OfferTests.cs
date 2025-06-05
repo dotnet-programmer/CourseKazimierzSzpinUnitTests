@@ -15,13 +15,14 @@ internal class OfferTests
 		using (var monitoredSubject = _offer.Monitor())
 		{
 			_offer.SetTitle("1");
+			// sprawdzenie czy zdarzenie zostało wywołane, przekazanie nazwy zdarzenia
 			monitoredSubject.Should().Raise("OfferChanged");
 		}
 	}
 
 	[TestCase("")]
 	[TestCase(" ")]
-	//[TestCase(null)]
+	[TestCase(null)]
 	public void SetTitle_WhenArgumentIsNullOrWhiteSpace_ShouldThrowArgumentNullException(string title)
 	{
 		Action action = () => _offer.SetTitle(title);

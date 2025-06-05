@@ -16,12 +16,12 @@ internal class TaskServiceTests
 	{
 		_task = new Task { Id = 1, Title = "1", User = new User { Email = "mail@mail.com" } };
 
-		_mockUnitOfWork = new Mock<IUnitOfWork>();
+		_mockUnitOfWork = new();
 		_mockUnitOfWork.Setup(x => x.Task.GetTask(_task.Id)).Returns(_task);
 
-		_mockLogger = new Mock<ILogger>();
-		_mockEmailSender = new Mock<IEmailSender>();
-		_mockMessageBoxWrapper = new Mock<IMessageBoxWrapper>();
+		_mockLogger = new();
+		_mockEmailSender = new();
+		_mockMessageBoxWrapper = new();
 
 		_taskService = new(_mockLogger.Object, _mockUnitOfWork.Object, _mockEmailSender.Object, _mockMessageBoxWrapper.Object);
 	}

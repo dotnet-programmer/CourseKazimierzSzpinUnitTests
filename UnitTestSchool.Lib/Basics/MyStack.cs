@@ -9,12 +9,7 @@ public class MyStack<T>
 
 	public void Push(T obj)
 	{
-		//if (obj == null)
-		//{
-		//	throw new ArgumentNullException(nameof(obj));
-		//}
 		ArgumentNullException.ThrowIfNull(obj, nameof(obj));
-
 		_list.Add(obj);
 	}
 
@@ -27,17 +22,9 @@ public class MyStack<T>
 
 		var result = _list[_list.Count - 1];
 		_list.RemoveAt(_list.Count - 1);
-
 		return result;
 	}
 
 	public T Peek()
-	{
-		if (_list.Count == 0)
-		{
-			throw new InvalidOperationException();
-		}
-
-		return _list[_list.Count - 1];
-	}
+		=> _list.Count == 0 ? throw new InvalidOperationException() : _list[_list.Count - 1];
 }

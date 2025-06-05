@@ -19,6 +19,7 @@ public class Math
 		return number1;
 	}
 
+	// jeśli parametr typu int, to testy powinny uwzględniać 3 przypadki: liczby ujemne, zero i dodatnie
 	public IEnumerable<int> GetEvenNumbers(int range)
 	{
 		List<int> evenNumbers = [];

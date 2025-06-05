@@ -8,27 +8,23 @@ public class TicTacToe
 	// 0 - puste
 	// 1 - krzyżyk
 	// 2 - kółko
+
+	// INPUT:
 	// [ [0,0,1]
 	//   [0,1,2]
 	//   [2,1,0] ]
+
+	// OUTPUT:
 	// zwraca -1 - rozgrywka nie jest zakończona
 	// zwraca 0 - remis
 	// zwraca 1 - wygrywa krzyżyk
 	// zwraca 2 - wygrywa kółko
 	public int SolveGame(int[,] board)
-	{
-		if (RowIsWon(board) || ColumnIsWon(board) || DiagonalIsWon(board))
-		{
-			return _winner;
-		}
-
-		return GameIsInProgress(board);
-	}
+		=> RowIsWon(board) || ColumnIsWon(board) || DiagonalIsWon(board) ? _winner : GameIsInProgress(board);
 
 	private bool DiagonalIsWon(int[,] board)
 	{
 		var result = false;
-
 		var diagonal = GetDiagonal(board);
 
 		for (var i = 0; i < 2; i++)
@@ -46,7 +42,7 @@ public class TicTacToe
 
 	private static List<List<int>> GetDiagonal(int[,] board)
 	{
-		var diagonal = new List<List<int>> { new List<int>(), new List<int>() };
+		List<List<int>> diagonal = [[], []];
 
 		for (var i = 0; i < board.GetLength(0); i++)
 		{
@@ -82,7 +78,7 @@ public class TicTacToe
 
 	private static List<int> GetColumn(int[,] board, int j)
 	{
-		var col = new List<int>();
+		List<int> col = [];
 
 		for (var i = 0; i < board.GetLength(0); i++)
 		{
@@ -111,12 +107,12 @@ public class TicTacToe
 		return result;
 	}
 
-	private static bool CheckIfGameIsWon(IReadOnlyCollection<int> row) 
+	private static bool CheckIfGameIsWon(IReadOnlyCollection<int> row)
 		=> row.All(x => x == row.First());
 
 	private static List<int> GetRow(int[,] board, int i)
 	{
-		var row = new List<int>();
+		List<int> row = [];
 
 		for (var j = 0; j < board.GetLength(1); j++)
 		{
@@ -127,9 +123,5 @@ public class TicTacToe
 	}
 
 	private static int GameIsInProgress(int[,] board)
-	{
-		var result = board.Cast<int>().Contains(0);
-
-		return result ? -1 : 0;
-	}
+		=> board.Cast<int>().Contains(0) ? -1 : 0;
 }

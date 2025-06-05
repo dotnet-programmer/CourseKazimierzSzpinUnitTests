@@ -4,10 +4,9 @@ internal class FizzBuzzTests
 {
 	[Test]
 	public void GetOutput_WhenInputIsDivisibleBy3And5_ShouldReturnFizzBuzz()
-	{
-		var result = FizzBuzz.GetOutput(15);
-		result.Should().Be("FizzBuzz");
-	}
+		=> FizzBuzz.GetOutput(15).Should().Be("FizzBuzz");
+	//var result = FizzBuzz.GetOutput(15);
+	//result.Should().Be("FizzBuzz");
 
 	[Test]
 	public void GetOutput_WhenInputIsDivisibleOnlyBy3_ShouldReturnFizz()
@@ -28,5 +27,15 @@ internal class FizzBuzzTests
 	{
 		var result = FizzBuzz.GetOutput(4);
 		result.Should().Be("4");
+	}
+
+	[TestCase(15, "FizzBuzz")]
+	[TestCase(5, "Buzz")]
+	[TestCase(3, "Fizz")]
+	[TestCase(4, "4")]
+	public void GetOutput_WhenCalled(int input, string expectedResult)
+	{
+		var result = FizzBuzz.GetOutput(input);
+		result.Should().Be(expectedResult);
 	}
 }

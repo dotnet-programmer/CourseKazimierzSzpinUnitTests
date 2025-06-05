@@ -10,7 +10,7 @@ internal class ConfigHelperTests
 	[SetUp]
 	public void SetUp()
 	{
-		_mockFileReader = new Mock<IFileReader>();
+		_mockFileReader = new();
 		_configHelper = new(_mockFileReader.Object);
 	}
 
@@ -22,7 +22,9 @@ internal class ConfigHelperTests
 
 		// przygotowanie Mocka zastępującego FileReader
 		string jsonConfig = JsonSerializer.Serialize(config);
-		_mockFileReader.Setup(x => x.Read(It.IsAny<string>())).Returns(jsonConfig);
+		_mockFileReader
+			.Setup(x => x.Read(It.IsAny<string>()))
+			.Returns(jsonConfig);
 
 		string connectionString = _configHelper.GetConnectionString();
 
@@ -32,7 +34,9 @@ internal class ConfigHelperTests
 	[Test]
 	public void GetConnectionString_WhenConfigIsNull_ShouldThrowExceptionWithCorrectMessage()
 	{
-		_mockFileReader.Setup(x => x.Read(It.IsAny<string>())).Returns("");
+		_mockFileReader
+			.Setup(x => x.Read(It.IsAny<string>()))
+			.Returns("");
 
 		Action action = () => _configHelper.GetConnectionString();
 

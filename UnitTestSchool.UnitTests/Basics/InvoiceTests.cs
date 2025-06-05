@@ -23,7 +23,7 @@ internal class InvoiceTests
 	{
 		Action action = () => _invoice.AddPosition(new InvoicePosition { IsAvailable = false });
 
-		// Exception - może zostać zwrócony ten sam wyjątek, lub wyjątki dziedziczące po nim
+		// Throw<Exception> - może zostać zwrócony ten sam wyjątek, lub wyjątki dziedziczące po nim
 		action.Should().Throw<Exception>().WithMessage("*position unavailable*");
 
 		// można sprawdzić czy nie został rzucony wyjątek

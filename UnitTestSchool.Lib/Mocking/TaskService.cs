@@ -5,15 +5,13 @@ namespace UnitTestSchool.Lib.Mocking;
 public class TaskServiceOld
 {
 	// uzależnienie od klasy Logger - zewnętrzna zależność
-	private Logger _logger = LogManager.GetCurrentClassLogger();
+	private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
 	// uzależnienie od klasy ApplicationDbContext - zewnętrzna zależność
-	private ApplicationDbContext _context;
+	private readonly ApplicationDbContext _context;
 
 	public TaskServiceOld()
-	{
-		_context = new ApplicationDbContext();
-	}
+		=> _context = new ApplicationDbContext();
 
 	public void CloseTask(int taskId)
 	{
@@ -42,32 +40,19 @@ public class TaskServiceOld
 }
 
 // refaktoring:
-public class TaskService
+public class TaskService(ILogger logger, IUnitOfWork unitOfWork, IEmailSender emailSender, IMessageBoxWrapper messageBoxWrapper)
 {
-	private readonly ILogger _logger;
+	private readonly ILogger _logger = logger;
 
-	// wzorzez Repozitory i Unit Of Work
-	private readonly IUnitOfWork _unitOfWork;
+	// wzorzec Repository i Unit Of Work
+	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-	private readonly IEmailSender _emailSender;
-	private readonly IMessageBoxWrapper _messageBoxWrapper;
-
-	public TaskService(ILogger logger, IUnitOfWork unitOfWork, IEmailSender emailSender, IMessageBoxWrapper messageBoxWrapper)
-	{
-		_logger = logger;
-		_unitOfWork = unitOfWork;
-		_emailSender = emailSender;
-		_messageBoxWrapper = messageBoxWrapper;
-	}
+	private readonly IEmailSender _emailSender = emailSender;
+	private readonly IMessageBoxWrapper _messageBoxWrapper = messageBoxWrapper;
 
 	public void CloseTask(int taskId)
 	{
-		var task = _unitOfWork.Task.GetTask(taskId);
-
-		if (task is null)
-		{
-			throw new Exception("Not found task.");
-		}
+		var task = _unitOfWork.Task.GetTask(taskId) ?? throw new Exception("Not found task.");
 
 		if (task.IsClosed)
 		{
@@ -75,7 +60,6 @@ public class TaskService
 		}
 
 		task.IsClosed = true;
-
 		_unitOfWork.Complete();
 
 		try

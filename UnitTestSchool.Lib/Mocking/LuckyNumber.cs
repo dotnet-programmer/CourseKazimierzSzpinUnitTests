@@ -3,14 +3,14 @@
 public class LuckyNumberOld
 {
 	// tak jak DateTime.Now - przy każdym uruchomieniu testu wynik będzie inny, więc to jest zewnętrzna zależność do usunięcia
-	private Random _random = new Random();
+	private readonly Random _random = new();
 
 	public int Generate()
 	{
 		var luckyNumber = _random.Next(100);
 
 		// zewnętrzna zależność - baza danych
-		using (var context = new ApplicationDbContext())
+		using (ApplicationDbContext context = new())
 		{
 			context.Numbers.Add(
 				new RandomNumber
@@ -66,33 +66,22 @@ public interface INumberRepository
 //	public void Dispose() => throw new NotImplementedException();
 //}
 
-public class LuckyNumber
+public class LuckyNumber(IRandomWrapper randomWrapper, IConsoleWrapper consoleWrapper, IMyDateTimeWrapper myDateTimeWrapper, IMyUnitOfWork myUnitOfWork)
 {
-	private readonly IRandomWrapper _randomWrapper;
-	private readonly IConsoleWrapper _consoleWrapper;
-	private readonly IMyDateTimeWrapper _myDateTimeWrapper;
-	private readonly IMyUnitOfWork _myUnitOfWork;
-
-	public LuckyNumber(IRandomWrapper randomWrapper, IConsoleWrapper consoleWrapper, IMyDateTimeWrapper myDateTimeWrapper, IMyUnitOfWork myUnitOfWork)
-	{
-		_randomWrapper = randomWrapper;
-		_consoleWrapper = consoleWrapper;
-		_myDateTimeWrapper = myDateTimeWrapper;
-		_myUnitOfWork = myUnitOfWork;
-	}
+	private readonly IRandomWrapper _randomWrapper = randomWrapper;
+	private readonly IConsoleWrapper _consoleWrapper = consoleWrapper;
+	private readonly IMyDateTimeWrapper _myDateTimeWrapper = myDateTimeWrapper;
+	private readonly IMyUnitOfWork _myUnitOfWork = myUnitOfWork;
 
 	public int Generate()
 	{
 		var luckyNumber = _randomWrapper.Next(100);
-
 		_myUnitOfWork.Number.AddNumber(new RandomNumber
-			{
-				Number = luckyNumber,
-				Date = _myDateTimeWrapper.UtcNow
-			});
-
+		{
+			Number = luckyNumber,
+			Date = _myDateTimeWrapper.UtcNow
+		});
 		_consoleWrapper.WriteLine($"Szczęśliwa liczba to: {luckyNumber}");
-
 		return luckyNumber;
 	}
 }

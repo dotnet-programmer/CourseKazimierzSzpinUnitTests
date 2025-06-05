@@ -11,6 +11,10 @@ public class Offer
 	public Offer()
 		=> _id = Guid.NewGuid();
 
+	// 3 przypadki testowe:
+	// - gdy argument nie jest poprawny (null lub whitespace) - powinien rzucić wyjątek ArgumentNullException
+	// - gdy argument jest poprawny - powinien zmienić tytuł oferty
+	// - gdy argument jest poprawny - powinien wywołać zdarzenie OfferChanged
 	public void SetTitle(string title)
 	{
 		if (string.IsNullOrWhiteSpace(title))

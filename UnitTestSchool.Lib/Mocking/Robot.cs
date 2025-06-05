@@ -9,7 +9,6 @@ public class Robot
 			? "Dzień dobry!"
 			: "Dobry wieczór!";
 
-
 	// klasa przygotowana do testów:
 
 	private readonly IDateTimeWrapper _dateTimeWrapper;
@@ -18,7 +17,7 @@ public class Robot
 		=> _dateTimeWrapper = dateTimeWrapper;
 
 	public string Greetings()
-		=> _dateTimeWrapper.Now.Hour < 18 
-		? "Dzień dobry!" 
+		=> _dateTimeWrapper.Now.Hour < 18
+		? "Dzień dobry!"
 		: "Dobry wieczór!";
 }

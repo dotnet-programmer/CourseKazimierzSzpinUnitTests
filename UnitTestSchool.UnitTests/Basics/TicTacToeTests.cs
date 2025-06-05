@@ -5,17 +5,17 @@ internal class TicTacToeTests
 	private TicTacToe _ticTacToe;
 
 	[SetUp]
-	public void SetUp() 
+	public void SetUp()
 		=> _ticTacToe = new();
 
 	[TestCase(1)]
 	[TestCase(2)]
-	public void SolveGame_WhenPlayerWinsInRow_ShouldReturnPlayerNumber(int player)
+	public void SolveGame_WhenPlayerWinsInRow1_ShouldReturnPlayerNumber(int player)
 	{
 		int[,] board = {
-			{ 0, 1, 0 },
 			{ player, player, player },
-			{ 2, 0, 1 }
+			{ 0, 1, 0 },
+			{ 2, 0, 1 },
 		};
 		int result = _ticTacToe.SolveGame(board);
 		result.Should().Be(player);
@@ -23,12 +23,64 @@ internal class TicTacToeTests
 
 	[TestCase(1)]
 	[TestCase(2)]
-	public void SolveGame_WhenPlayerWinsInColumn_ShouldReturnPlayerNumber(int player)
+	public void SolveGame_WhenPlayerWinsInRow2_ShouldReturnPlayerNumber(int player)
+	{
+		int[,] board = {
+			{ 0, 1, 0 },
+			{ player, player, player },
+			{ 2, 0, 1 },
+		};
+		int result = _ticTacToe.SolveGame(board);
+		result.Should().Be(player);
+	}
+
+	[TestCase(1)]
+	[TestCase(2)]
+	public void SolveGame_WhenPlayerWinsInRow3_ShouldReturnPlayerNumber(int player)
+	{
+		int[,] board = {
+			{ 0, 1, 0 },
+			{ 2, 0, 1 },
+			{ player, player, player },
+		};
+		int result = _ticTacToe.SolveGame(board);
+		result.Should().Be(player);
+	}
+
+	[TestCase(1)]
+	[TestCase(2)]
+	public void SolveGame_WhenPlayerWinsInColumn1_ShouldReturnPlayerNumber(int player)
+	{
+		int[,] board = {
+			{ player, 0, 0 },
+			{ player, 2, 1 },
+			{ player, 0, 0 }
+		};
+		int result = _ticTacToe.SolveGame(board);
+		result.Should().Be(player);
+	}
+
+	[TestCase(1)]
+	[TestCase(2)]
+	public void SolveGame_WhenPlayerWinsInColumn2_ShouldReturnPlayerNumber(int player)
 	{
 		int[,] board = {
 			{ 0, player, 0 },
 			{ 2, player, 1 },
 			{ 0, player, 0 }
+		};
+		int result = _ticTacToe.SolveGame(board);
+		result.Should().Be(player);
+	}
+
+	[TestCase(1)]
+	[TestCase(2)]
+	public void SolveGame_WhenPlayerWinsInColumn3_ShouldReturnPlayerNumber(int player)
+	{
+		int[,] board = {
+			{ 0, 0, player },
+			{ 2, 1, player },
+			{ 0, 0, player }
 		};
 		int result = _ticTacToe.SolveGame(board);
 		result.Should().Be(player);

@@ -5,7 +5,7 @@ internal class MyStackTests
 	private MyStack<int?> _stack;
 
 	[SetUp]
-	public void SetUp() 
+	public void SetUp()
 		=> _stack = new();
 
 	#region Push

@@ -16,7 +16,9 @@ internal class OrderServiceTests
 	public void CalculateDiscount_WhenCustomerIsNew_ShouldReturn0_Mock()
 	{
 		Mock<ICustomer> mockCustomer = new();
-		mockCustomer.Setup(x => x.IsNewCustomer).Returns(true);
+		mockCustomer
+			.Setup(x => x.IsNewCustomer)
+			.Returns(true);
 		OrderService orderService = new();
 		var result = orderService.CalculateDiscountMoq(1m, mockCustomer.Object);
 		result.Should().Be(0);

@@ -5,6 +5,6 @@
 // Mockujemy tylko zewnetrzne zależności
 internal class FakeUserRepository : IUsersRepository
 {
-	public bool Login(string user, string password) 
+	public bool Login(string user, string password)
 		=> user == "1" && password == "2";
 }
