@@ -2,10 +2,11 @@
 
 namespace OrdersManager.Core
 {
-    public interface IUnitOfWork
-    {
-        void Complete();
-        IOrderRepository Order { get; }
-        IUserRepository User { get; }
-    }
+	public interface IUnitOfWork
+	{
+		void Complete();
+
+		IOrderRepository Order { get; }
+		IUserRepository User { get; }
+	}
 }

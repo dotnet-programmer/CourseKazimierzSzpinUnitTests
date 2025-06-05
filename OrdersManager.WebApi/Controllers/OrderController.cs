@@ -1,67 +1,92 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System;
+using System.Web.Http;
+using Microsoft.AspNet.Identity;
 using NLog;
 using OrdersManager.Core.Models.Domain;
 using OrdersManager.Core.Services;
-using System;
-using System.Web.Http;
 
 namespace OrdersManager.Controllers
 {
-    public class OrderController : ApiController
-    {
-        private IOrderService _orderService;
-        private ILogger _logger;
+	public class OrderController : ApiController
+	{
+		private readonly IOrderService _orderService;
+		private readonly ILogger _logger;
 
-        public OrderController(IOrderService ordersService, ILogger logger)
-        {
-            _orderService = ordersService;
-            _logger = logger;
-        }
+		// Do utworzenia kontrolera przekazać serwis do obsługi zamówień oraz loggera.
+		// Są to zewnętrzne zależności, które będą wstrzykiwane przez kontener DI.
+		// W testach należy je zamockować, aby kontroler mógł być testowany w izolacji.
+		public OrderController(IOrderService ordersService, ILogger logger)
+		{
+			_orderService = ordersService;
+			_logger = logger;
+		}
 
-        [HttpPost]
-        public IHttpActionResult AddProduct(Product product)
-        {
-            if (product == null)
-                return BadRequest();
+		[HttpPost]
+		public IHttpActionResult AddProduct(Product product)
+		{
+			// pierwszy przypadek testowy: jeśli produkt jest null, zwracamy BadRequest
+			if (product == null)
+			{
+				return BadRequest();
+			}
 
-            if (product.OrderId <= 0)
-                return BadRequest();
+			// drugi przypadek testowy: jeśli OrderId jest mniejsze lub równe 0, zwracamy BadRequest
+			if (product.OrderId <= 0)
+			{
+				return BadRequest();
+			}
 
-            var userId = User.Identity.GetUserId();
+			// zewnętrzna zależność: pobieranie id użytkownika z kontekstu tożsamości
+			var userId = User.Identity.GetUserId();
 
-            try
-            {
-                _orderService.AddProduct(userId, product);
-            }
-            catch (Exception exception)
-            {
-                _logger.Error(exception.Message);
-                return BadRequest();
-            }
+			try
+			{
+				// trzeci przypadek testowy: dodajemy produkt do zamówienia, sprawdzić czy metoda wywołałą się 1 raz
+				_orderService.AddProduct(userId, product);
+			}
+			catch (Exception exception)
+			{
+				// piąty przypadek testowy: jeśli wystąpił błąd podczas dodawania produktu, logowanie błędu
+				_logger.Error(exception.Message);
 
-            return Ok();
-        }
+				// szósty przypadek testowy: jeśli wystąpił błąd podczas dodawania produktu, zwrócenie BadRequest
+				return BadRequest();
+			}
 
-        [HttpGet]
-        public IHttpActionResult GetOrder(int orderId)
-        {
-            if (orderId <= 0)
-                return BadRequest();
+			// czwarty przypadek testowy: dodajemy produkt do zamówienia, jeśli wszystko poszło dobrze, zwracamy Ok
+			return Ok();
+		}
 
-            var userId = User.Identity.GetUserId();
-            Order order = null;
+		// na podstawie id zamówienia zwraca zamówienie wraz z produktami
+		[HttpGet]
+		public IHttpActionResult GetOrder(int orderId)
+		{
+			// pierwszy przypadek testowy: jeśli orderId jest mniejsze lub równe 0, zwraca BadRequest
+			if (orderId <= 0)
+			{
+				return BadRequest();
+			}
 
-            try
-            {
-                order = _orderService.GetOrderWithProducts(orderId, userId);
-            }
-            catch (Exception exception)
-            {
-                _logger.Error(exception.Message);
-                return BadRequest();
-            }
+			// zewnętrzna zależność: pobieranie id użytkownika z kontekstu tożsamości
+			var userId = User.Identity.GetUserId();
+			Order order;
+			try
+			{
+				// drugi przypadek testowy: pobieranie zamówienia wraz z produktami, sprawdzić czy metoda wywołała się 1 raz
+				order = _orderService.GetOrderWithProducts(orderId, userId);
+			}
+			catch (Exception exception)
+			{
+				// piąty przypadek testowy: jeśli wystąpił błąd podczas dodawania produktu, logowanie błędu
+				_logger.Error(exception.Message);
 
-            return Ok(order);
-        }
-    }
+				// szósty przypadek testowy: jeśli wystąpił błąd podczas dodawania produktu, zwrócenie BadRequest
+				return BadRequest();
+			}
+
+			// trzeci przypadek testowy: pobieranie zamówienia wraz z produktami, jeśli wszystko poszło dobrze, zwracamy Ok
+			// czwarty przypadek testowy: pobieranie zamówienia wraz z produktami, jeśli wszystko poszło dobrze, zwracamy zamówienie
+			return Ok(order);
+		}
+	}
 }

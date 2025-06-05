@@ -2,9 +2,10 @@
 
 namespace OrdersManager.Core.Services
 {
-    public interface IOrderService
-    {
-        void AddProduct(string userId, Product product);
-        Order GetOrderWithProducts(int orderId, string userId);
-    }
+	public interface IOrderService
+	{
+		void AddProduct(string userId, Product product);
+
+		Order GetOrderWithProducts(int orderId, string userId);
+	}
 }
