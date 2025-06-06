@@ -40,7 +40,9 @@ namespace OrdersManager.UnitTests.Persistence.Repositories
 		public void GetUser_WhenUserDoesntExists_ShouldThrowNullReferenceException()
 		{
 			string badUserId = "4";
+
 			Action action = () => _userRepository.GetUser(badUserId);
+
 			action.Should().ThrowExactly<NullReferenceException>().WithMessage("*User doesn't exists.*");
 		}
 
@@ -48,6 +50,7 @@ namespace OrdersManager.UnitTests.Persistence.Repositories
 		public void GetUser_WhenCalled_ShouldReturnUser()
 		{
 			var result = _userRepository.GetUser(_users.First().Id);
+
 			result.Should().Be(_users.First());
 		}
 	}

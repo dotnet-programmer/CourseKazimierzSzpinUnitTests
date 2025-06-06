@@ -37,7 +37,9 @@ namespace OrdersManager.UnitTests.Persistence.Services
 		public void GetDiscount_WhenUserIsNew_ShouldReturn0()
 		{
 			_user.IsNewUser = true;
+
 			var discount = _discountService.GetDiscount(_order.Id, _user.Id);
+
 			discount.Should().Be(0);
 		}
 
@@ -45,6 +47,7 @@ namespace OrdersManager.UnitTests.Persistence.Services
 		public void GetDiscount_WhenOrderDoesntHaveProducts_ShouldThrowAnException()
 		{
 			Action action = () => _discountService.GetDiscount(_order.Id, _user.Id);
+
 			action.Should().Throw<Exception>().WithMessage("*Order doesn't contain products.*");
 		}
 
@@ -53,7 +56,9 @@ namespace OrdersManager.UnitTests.Persistence.Services
 		{
 			_order.Products.Add(new Product { Price = 1, Quantity = 1 });
 			_order.Products.Add(new Product { Price = 100, Quantity = 3 });
+
 			var result = _discountService.GetDiscount(_order.Id, _user.Id);
+
 			result.Should().Be(100);
 		}
 
@@ -61,7 +66,9 @@ namespace OrdersManager.UnitTests.Persistence.Services
 		public void GetDiscount_WhenOrderTotalPriceIsLowerOrEqual300_ShouldReturn10()
 		{
 			_order.Products.Add(new Product { Price = 1, Quantity = 1 });
+
 			var result = _discountService.GetDiscount(_order.Id, _user.Id);
+
 			result.Should().Be(10);
 		}
 	}

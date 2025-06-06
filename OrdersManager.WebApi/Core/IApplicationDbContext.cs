@@ -11,5 +11,7 @@ namespace OrdersManager.Core
 		DbSet<Product> Products { get; set; }
 
 		int SaveChanges();
+
+		void Dispose();
 	}
 }

@@ -88,5 +88,56 @@ namespace OrdersManager.Controllers
 			// czwarty przypadek testowy: pobieranie zamówienia wraz z produktami, jeśli wszystko poszło dobrze, zwracamy zamówienie
 			return Ok(order);
 		}
+
+		[HttpPost]
+		public IHttpActionResult DeleteProduct(int orderId, int productId)
+		{
+			if (productId <= 0)
+			{
+				return BadRequest();
+			}
+
+			if (orderId <= 0)
+			{
+				return BadRequest();
+			}
+
+			var userId = User.Identity.GetUserId();
+
+			try
+			{
+				_orderService.DeleteProduct(orderId, productId, userId);
+			}
+			catch (Exception exception)
+			{
+				_logger.Error(exception.Message);
+				return BadRequest();
+			}
+
+			return Ok();
+		}
+
+		[HttpPut]
+		public IHttpActionResult UpdateProduct(Product product)
+		{
+			if (product == null)
+			{
+				return BadRequest();
+			}
+
+			var userId = User.Identity.GetUserId();
+
+			try
+			{
+				_orderService.UpdateProduct(userId, product);
+			}
+			catch (Exception exception)
+			{
+				_logger.Error(exception.Message);
+				return BadRequest();
+			}
+
+			return Ok();
+		}
 	}
 }

@@ -38,6 +38,7 @@ namespace OrdersManager.UnitTests.Controllers
 		public void GetOrder_WhenOrderIdIsLowerThan1_ShouldReturnBadRequest()
 		{
 			var result = _orderController.GetOrder(0);
+
 			result.Should().BeOfType<BadRequestResult>();
 		}
 
@@ -45,6 +46,7 @@ namespace OrdersManager.UnitTests.Controllers
 		public void GetOrder_WhenCalled_ShouldCalledOnce()
 		{
 			var result = _orderController.GetOrder(_orderId);
+
 			_mockOrderService.Verify(x => x.GetOrderWithProducts(_orderId, _userId), Times.Once);
 		}
 
@@ -52,6 +54,7 @@ namespace OrdersManager.UnitTests.Controllers
 		public void GetOrder_WhenCalled_ShouldReturnOkResult()
 		{
 			var result = _orderController.GetOrder(_orderId);
+
 			result.Should().BeOfType<OkNegotiatedContentResult<Order>>();
 		}
 
@@ -68,6 +71,7 @@ namespace OrdersManager.UnitTests.Controllers
 				});
 
 			IHttpActionResult actionResult = _orderController.GetOrder(_orderId);
+
 			var contentResult = actionResult as OkNegotiatedContentResult<Order>;
 			contentResult.Should().NotBeNull();
 			contentResult.Content.Should().NotBeNull();
@@ -80,7 +84,9 @@ namespace OrdersManager.UnitTests.Controllers
 			_mockOrderService
 				.Setup(x => x.GetOrderWithProducts(_orderId, _userId))
 				.Throws(new Exception(ExceptionMessage));
+
 			var result = _orderController.GetOrder(_orderId);
+
 			_mockLogger.Verify(x => x.Error(ExceptionMessage), Times.Once);
 		}
 
@@ -90,7 +96,9 @@ namespace OrdersManager.UnitTests.Controllers
 			_mockOrderService
 				.Setup(x => x.GetOrderWithProducts(_orderId, _userId))
 				.Throws(new Exception(ExceptionMessage));
+
 			var result = _orderController.GetOrder(_orderId);
+
 			result.Should().BeOfType<BadRequestResult>();
 		}
 	}

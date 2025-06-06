@@ -14,15 +14,16 @@ namespace OrdersManager.Persistence.Repositories
 			=> _context = context;
 
 		public ApplicationUser GetUser(string userId)
-		{
-			var user = _context.Users.FirstOrDefault(x => x.Id == userId);
+			=> _context.Users.FirstOrDefault(x => x.Id == userId) ?? throw new NullReferenceException("User doesn't exists.");
 
-			if (user == null)
-			{
-				throw new NullReferenceException("User doesn't exists.");
-			}
-
-			return user;
-		}
+		//public ApplicationUser GetUser(string userId)
+		//{
+		//	var user = _context.Users.FirstOrDefault(x => x.Id == userId);
+		//	if (user == null)
+		//	{
+		//		throw new NullReferenceException("User doesn't exists.");
+		//	}
+		//	return user;
+		//}
 	}
 }
