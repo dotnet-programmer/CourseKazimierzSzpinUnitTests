@@ -1,0 +1,33 @@
+﻿using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using OrdersManager.WebApp.Core.Models.Domain;
+using OrdersManager.WebApp.Persistence;
+
+// żeby to zadziałało, namespace musi być taki sam, jak klasa z testami
+namespace OrdersManager.IntegrationTests.Controllers;
+
+// klasa, która będzie wywoływana przed każdym pakietem testów, czyli raz przed uruchmieniem wszystkich testów
+// dodaje do bazy danych nowego użytkownika, żeby w bazie był już jakikolwiek na czas testów, żeby można było przypisać do niego np. zamówienie
+[SetUpFixture]
+public class SetUpFixture
+{
+	[OneTimeSetUp]
+	public void OneTimeSetUp()
+		=> AddUserIfDoesntExists();
+
+	private void AddUserIfDoesntExists()
+	{
+		var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			.UseSqlServer("Server=(local)\\SQLEXPRESS;Database=OrdersManager-tests;User Id=DBUser;Password=1234;TrustServerCertificate=True;")
+			.Options;
+
+		using (var context = new ApplicationDbContext(options))
+		{
+			if (!context.Users.Any())
+			{
+				context.Users.Add(new ApplicationUser { UserName = "1", Email = "2", PasswordHash = "3" });
+				context.SaveChanges();
+			}
+		}
+	}
+}
