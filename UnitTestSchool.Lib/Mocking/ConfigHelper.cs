@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 
 namespace UnitTestSchool.Lib.Mocking;
 
@@ -10,7 +10,7 @@ public class ConfigHelper
 		// zewnętrzna zależność - pobieranie danych z pliku, trzeba się pozbyć i tutaj podstawić Mocka żeby napisać test do takiej metody
 		// żeby to zastąpić, trzeba wprowadzić interfejs, żeby w testach zastąpić go Mockiem
 		var configFromFile = File.ReadAllText("config.txt");
-		var config = JsonConvert.DeserializeObject<Config>(configFromFile);
+		var config = JsonSerializer.Deserialize<Config>(configFromFile);
 		return config.ConnectionString;
 	}
 
@@ -27,8 +27,7 @@ public class ConfigHelper
 	{
 		string configFromFile = _fileReader.Read("config.txt");
 
-		//var config = JsonSerializer.Deserialize<Config>(configFromFile);
-		Config config = JsonConvert.DeserializeObject<Config>(configFromFile);
+		Config config = JsonSerializer.Deserialize<Config>(configFromFile);
 
 		return config is null
 			? throw new Exception("Incorrect parsing config")
