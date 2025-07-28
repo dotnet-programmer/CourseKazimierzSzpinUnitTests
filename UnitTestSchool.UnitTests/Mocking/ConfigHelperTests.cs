@@ -40,6 +40,6 @@ internal class ConfigHelperTests
 
 		Action action = () => _configHelper.GetConnectionString();
 
-		action.Should().ThrowExactly<Exception>().WithMessage("*Incorrect parsing config*");
+		action.Should().ThrowExactly<JsonException>();
 	}
 }
