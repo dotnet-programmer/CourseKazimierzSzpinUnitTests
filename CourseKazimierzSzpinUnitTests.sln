@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestSchool.Lib", "UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestSchool.UnitTests", "UnitTestSchool.UnitTests\UnitTestSchool.UnitTests.csproj", "{ABD86A96-B8E1-4174-B5EB-E84FE6206687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdersManager", "OrdersManager.WebApi\OrdersManager.csproj", "{EF602B59-15F5-42FA-949B-8FF0A1F02933}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdersManager.Old", "OrdersManager.Old.WebApi\OrdersManager.Old.csproj", "{EF602B59-15F5-42FA-949B-8FF0A1F02933}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdersManager.UnitTests", "OrdersManager.UnitTests\OrdersManager.UnitTests.csproj", "{748A34EF-216A-4B07-8945-E1C7BD31948F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdersManager.Old.UnitTests", "OrdersManager.Old.UnitTests\OrdersManager.Old.UnitTests.csproj", "{748A34EF-216A-4B07-8945-E1C7BD31948F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdersManager.IntegrationTests", "OrdersManager.IntegrationTests\OrdersManager.IntegrationTests.csproj", "{8BC524F9-88A3-45EA-B8DB-2D53AE6F287E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdersManager.Old.IntegrationTests", "OrdersManager.Old.IntegrationTests\OrdersManager.Old.IntegrationTests.csproj", "{8BC524F9-88A3-45EA-B8DB-2D53AE6F287E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
