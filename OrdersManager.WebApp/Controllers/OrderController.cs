@@ -13,7 +13,7 @@ namespace OrdersManager.WebApp.Controllers;
 public class OrderController(IOrderService ordersService, ILogger<OrderController> logger) : ControllerBase
 {
 	[HttpPost]
-	public IActionResult AddProduct(Product product)
+	public IActionResult AddProduct(Product? product)
 	{
 		// pierwszy przypadek testowy: jeśli produkt jest null, zwracamy BadRequest
 		if (product == null)
@@ -109,7 +109,7 @@ public class OrderController(IOrderService ordersService, ILogger<OrderControlle
 	}
 
 	[HttpPut]
-	public IActionResult UpdateProduct(Product product)
+	public IActionResult UpdateProduct(Product? product)
 	{
 		if (product == null)
 		{
