@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using OrdersManager.WebApp.Core.Models.Domain;
 using OrdersManager.WebApp.Persistence;
@@ -17,8 +18,11 @@ public class SetUpFixture
 
 	private void AddUserIfDoesntExists()
 	{
+		var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true);
+		var config = builder.Build();
+
 		var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			.UseSqlServer("Server=(local)\\SQLEXPRESS;Database=OrdersManager-tests;User Id=DBUser;Password=1234;TrustServerCertificate=True;")
+			.UseSqlServer(config["ConnectionString"])
 			.Options;
 
 		using (var context = new ApplicationDbContext(options))

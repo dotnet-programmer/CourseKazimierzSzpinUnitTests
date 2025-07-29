@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using OrdersManager.IntegrationTests.Extensions;
 using OrdersManager.IntegrationTests.Helpers;
@@ -14,8 +15,11 @@ namespace OrdersManager.IntegrationTests.Controllers;
 
 internal class OrderControllerTests
 {
+	private static readonly IConfigurationBuilder _builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true);
+	private static readonly IConfigurationRoot _config = _builder.Build();
+
 	private readonly DbContextOptions<ApplicationDbContext> _options = new DbContextOptionsBuilder<ApplicationDbContext>()
-		.UseSqlServer("Server=(local)\\SQLEXPRESS;Database=OrdersManager-tests;User Id=DBUser;Password=1234;TrustServerCertificate=True;")
+		.UseSqlServer(_config["ConnectionString"])
 		.Options;
 
 	private IApplicationDbContext _context;
